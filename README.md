@@ -27,4 +27,4 @@ graph LR
 - MVC 是后端的分层开发概念
 - MVVM是前端视图层的概念，主要关注于 视图层分离，也就是说：MVVM把前端的视图层，分为了 三部分 Model, View , VM ViewModel
 
-![MVVM理解](pic\01.MVC和MVVM的关系图解.png)
+![MVVM理解](pic\01.MVC+MVVM.png)
