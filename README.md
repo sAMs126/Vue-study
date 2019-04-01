@@ -69,9 +69,9 @@ graph LR
 
 ## `v-bind`
 
-- **缩写**：<font color=#e96900>`:`</font>
+*Vue 提供的属性绑定机制*
 
-- **预期**：<font color=#e96900>`any (with argument) | Object (without argument)`</font>
+- **缩写**：<font color=#e96900>`:`</font>
 
 - **用法**：
 
@@ -83,3 +83,16 @@ graph LR
 
   没有参数时，可以绑定到一个包含键值对的对象。注意此时 <font color=#e96900>`class`</font> 和 <font color=#e96900>`style`</font> 绑定不支持数组和对象。
 
+## `v-on`
+
+*Vue 提供事件绑定机制*
+
+- **缩写**：<font color=#e96900>`@`</font>
+
+- **用法**：
+
+  绑定事件监听器。事件类型由参数指定。表达式可以是一个方法的名字或一个内联语句，如果没有修饰符也可以省略。
+
+  用在普通元素上时，只能监听**原生 DOM 事件**。用在自定义元素组件上时，也可以监听子组件触发的**自定义事件**。
+
+  在监听原生 DOM 事件时，方法以事件为唯一的参数。如果使用内联语句，语句可以访问一个 <font color=#e96900>`$event`</font> 属性：<font color=#e96900>`v-on:click="handle('ok', $event)"`</font>。

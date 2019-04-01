@@ -21,9 +21,11 @@
     </div>
 
     <div id="app2">
-        <span v-bind:title="title">
+        <p v-bind:title="title">
             鼠标悬停几秒钟查看此处动态绑定的提示信息！
-        </span>
+        </p>
+        <input type="button" value="按钮" v-on:click="show"></input>
+        <!-- <input type="button" value="按钮" v-on:mouseover="show"></input> -->
     </div>
 
     <!-- 构造较慢的网络环境 -->
@@ -42,8 +44,18 @@
         el: '#app2',
         data: {
             title: '页面加载于 ' + new Date().toLocaleString()
+        },
+        methods: {
+            show: function () {
+                alert('Hello')
+            }
         }
     })
+
+    /* 原始DOM操作
+    document.getElementById('btn').onclick = function () {
+        alert('Hello')
+    } */
     </script>
 </body>
 </html>
