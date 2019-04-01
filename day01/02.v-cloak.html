@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- ** 使用 v-cloak 能够解决 插值表达式闪烁问题 -->
+    <div id="app" >
+        <p v-cloak>{{msg}}</p>
+        <p v-text="msg"></p>
+        <p v-html="html"></p>
+    </div>
+
+    <div id="app2">
+        <span v-bind:title="title">
+            鼠标悬停几秒钟查看此处动态绑定的提示信息！
+        </span>
+    </div>
+
+    <!-- 构造较慢的网络环境 -->
+    <script src="../lib/vue-2.4.0.js"></script>
+
+    <script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'Hello World!',
+            html: '<h1>我是一个h1标题</h1>'
+        }
+    })
+
+    var vm = new Vue({
+        el: '#app2',
+        data: {
+            title: '页面加载于 ' + new Date().toLocaleString()
+        }
+    })
+    </script>
+</body>
+</html>

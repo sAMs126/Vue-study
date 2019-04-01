@@ -28,3 +28,48 @@ graph LR
 - MVVM是前端视图层的概念，主要关注于 视图层分离，也就是说：MVVM把前端的视图层，分为了 三部分 Model, View , VM ViewModel
 
 ![MVVM理解](pic/pic01.png)
+
+# Vue指令
+
+## `v-cloak`
+
+- **不需要表达式**
+
+- **用法**：
+
+  这个指令保持在元素上直到关联实例结束编译。和 CSS 规则如 <font color=#e96900>` [v-cloak] { display: none } `</font> 一起用时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕。
+
+- 用于避免网速过慢造成数据未加载情况
+
+![网页出现{{}}情况](pic/pic02.png)
+
+## `v-text`
+
+- **预期**：`string`
+
+- **详细**：
+
+  更新元素的 <font color=#e96900>`textContent`</font>。如果要更新部分的 <font color=#e96900>`textContent`</font> ，需要使用 <font color=#e96900>`{{ Mustache }}`</font> 插值。
+
+### `v-cloak` 与 `v-text` 的区别
+
+- 默认 `v-text` 是没有闪烁问题
+- `v-text` 会覆盖掉元素中原本的内容，但是 插值表达式 只会替换自己的占位符，不会把整个内容清空
+- 都会把内容当作普通的文本输出
+
+## `v-html`
+
+- **预期**：`string`
+
+- **详细**：
+
+  更新元素的 <font color=#e96900>`innerHTML`</font> 。**注意：内容按普通 HTML 插入 - 不会作为 Vue 模板进行编译** 。
+
+  如果试图使用 <font color=#e96900>`v-html`</font> 组合模板，可以重新考虑是否通过使用组件来替代。
+
+## `v-bind`
+
+- **缩写**：<font color=#e96900>`:`</font>
+
+- **预期**：<font color=#e96900>`any (with argument) | Object (without argument)`</font>
+
