@@ -73,3 +73,13 @@ graph LR
 
 - **预期**：<font color=#e96900>`any (with argument) | Object (without argument)`</font>
 
+- **用法**：
+
+  动态地绑定一个或多个特性，或一个组件 prop 到表达式。
+
+  在绑定 <font color=#e96900>`class`</font> 或 <font color=#e96900>`style`</font> 特性时，支持其它类型的值，如数组或对象。
+
+  在绑定 prop 时，prop 必须在子组件中声明。可以用修饰符指定不同的绑定类型。
+
+  没有参数时，可以绑定到一个包含键值对的对象。注意此时 <font color=#e96900>`class`</font> 和 <font color=#e96900>`style`</font> 绑定不支持数组和对象。
+
