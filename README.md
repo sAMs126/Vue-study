@@ -97,7 +97,7 @@ graph LR
 
   在监听原生 DOM 事件时，方法以事件为唯一的参数。如果使用内联语句，语句可以访问一个 <font color=#e96900>`$event`</font> 属性：<font color=#e96900>`v-on:click="handle('ok', $event)"`</font>。
 
-- **事件修饰符**
+  **事件修饰符**
 
   - <font color=#e96900>`.stop`</font> - 调用 <font color=#e96900>`event.stopPropagation()`</font> 阻止冒泡。
 
@@ -161,5 +161,13 @@ graph LR
   <a href="http://www.baidu.com" @click.prevent.once="a_handle">点我，去百度</a>
   ```
 
-  
+## `v-model`
+
+- **用法**：
+
+  在表单控件或者组件上创建双向绑定。
+
+
+
+
 
