@@ -167,7 +167,84 @@ graph LR
 
   在表单控件或者组件上创建双向绑定。
 
+# 在 Vue 中使用样式
+
+## 使用 class 样式
+
+*数组语法*
+
+我们可以把一个数组传给 <font color=#e96900>`v-bind:class`</font>，以应用一个 class 列表：
+
+```html
+<h1 :class="['red']">Look! Styles, Manipulate Text, Colors, Boxes and more...</h1>
+```
+
+如果你也想根据条件切换列表中的 class，可以用三元表达式：
+
+```html
+<h1 :class="['red', flag?'active':'']">Look! Styles, Manipulate Text, Colors, Boxes and more...</h1>
+```
+
+```js
+var vm = new Vue({
+    el: '#app',
+    data: {
+        flag: true
+    },
+    methods: {}
+})
+```
+
+只有在 `isActive` 是 truthy[^1] 时才添加 `activeClass`。
+
+不过，当有多个条件 class 时这样写有些繁琐。所以在数组语法中也可以使用对象语法：
+
+```html
+<h1 :class="['red', {'active':flag}]">Look! Styles, Manipulate Text, Colors, Boxes and more...
+```
+*对象语法*
+
+我们可以传给 <font color=#e96900>`v-bind:class`</font> 一个对象，以动态地切换 class：
+
+```html
+<h1 :class="{red: true, thin: false, italic: true, active: false}">Look! Styles, Manipulate Text, Colors, Boxes and more...</h1>
+```
+
+绑定的数据对象不必内联定义在模板里：
+
+```html
+<h1 :class="classObj">Look! Styles, Manipulate Text, Colors, Boxes and more...</h1>
+```
+
+```js
+var vm = new Vue({
+    el: '#app',
+    data: {
+        classObj: {
+            red: true,
+            thin: false,
+            italic: true,
+            active: false
+        }
+    },
+    methods: {}
+})
+```
+
+## 使用 style 样式
+
+**绑定内联样式**
+
+*对象语法*
+
+<font color=#e96900>`v-bind:style`</font> 的对象语法十分直观——看着非常像 CSS，但其实是一个 JavaScript 对象。CSS 属性名可以用驼峰式 (camelCase) 或短横线分隔 (kebab-case，记得用单引号括起来) 来命名：
+
+```html
+<h1 :style="{color:'red', 'font-weight':200}">Look! Styles, Manipulate Text, Colors, Boxes and more...</h1>
+```
 
 
 
+**译者注**
 
+[^1]: truthy 不是 `true`，详见 [MDN](https://developer.mozilla.org/zh-CN/docs/Glossary/Truthy) 的解释。
