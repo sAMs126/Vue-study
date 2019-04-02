@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 1.导入Vue包 -->
+    <script src="../lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <!-- 2.创建控制区 -->
+    <div id="app">
+        <input type="button" value="滚动" @click="on">
+        <input type="button" value="停止" @click="off">
+        <h4>{{msg}}</h4>
+    </div>
+
+    <script>
+    var vm = new Vue({
+        el: '#app',
+        data:{
+            msg: '测试跑马灯~ABCDEFG',
+            inetrvalId: null
+        },
+        methods: {
+            // [滚动] 按钮
+            // -> 1.获取 msg 字符串，调用 substring 进行截取，把第一个字符串截取出来放到最后一位
+            // -> 2.通过定时器实现循环截取功能
+            /* on:function () {
+                
+            } */
+            // es6写法
+            on() {
+                // 防止多次点击而造成添加了多个定时器
+                if (this.inetrvalId != null) {
+                    return
+                }
+
+                // ** 如果需要上级的对像，在没有参数的情况下，提前设置一个临时变量_this，可以保存上级对像
+                /* var _this = this
+                setInterval(function () { */
+                // -> 使用es6箭头函数
+                this.inetrvalId = setInterval( () => {
+                    var startStr = this.msg.substring(0,1)
+                    var endStr = this.msg.substring(1)
+                    // ** vm 实例会监听自己 data 中数据的改变，当数据发生变化，会自动把最新的数据同步到页面上去
+                    this.msg = endStr + startStr
+                    // console.log(this.msg)
+                }, 400)
+            },
+            // 关闭定时器，即取消跑马灯
+            off() {
+                clearInterval(this.inetrvalId)
+                // 给定时器重新复制为 null ,防止无法再次开启定时器
+                this.inetrvalId = null
+            }
+        }
+    })
+
+
+    </script>
+</body>
+</html>

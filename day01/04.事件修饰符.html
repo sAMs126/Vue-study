@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <style>
+        .inner-div{
+            height: 200px;
+            background-color: darkorange;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- <div class="inner-div" @click="div_handle">
+            <input type="button" value="按钮冒泡" @click.stop="btn_handle">
+        </div> -->
+
+        <!-- <a href="http://www.baidu.com" @click.prevent="a_handle">点我，去百度</a> -->
+
+        <!-- <div class="inner-div" @click.capture="div_handle">
+            <input type="button" value="按钮冒泡" @click="btn_handle">
+        </div> -->
+
+        <!-- <div class="inner-div" @click.self="div_handle">
+            <input type="button" value="按钮冒泡" @click="btn_handle">
+        </div> -->
+
+        <a href="http://www.baidu.com" @click.prevent.once="a_handle">点我，去百度</a>
+    </div>
+
+    <script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            
+        },
+        methods: {
+            div_handle(){
+                console.log("触发div点击事件")
+            },
+            btn_handle(){
+                console.log("触发btn点击事件")
+            },
+            a_handle(){
+                console.log("触发link点击事件")
+            }
+        }
+    })
+    </script>
+</body>
+</html>

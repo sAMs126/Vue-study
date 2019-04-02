@@ -96,3 +96,70 @@ graph LR
   用在普通元素上时，只能监听**原生 DOM 事件**。用在自定义元素组件上时，也可以监听子组件触发的**自定义事件**。
 
   在监听原生 DOM 事件时，方法以事件为唯一的参数。如果使用内联语句，语句可以访问一个 <font color=#e96900>`$event`</font> 属性：<font color=#e96900>`v-on:click="handle('ok', $event)"`</font>。
+
+- **事件修饰符**
+
+  - <font color=#e96900>`.stop`</font> - 调用 <font color=#e96900>`event.stopPropagation()`</font> 阻止冒泡。
+
+  ```html
+  <div class="inner-div" @click="div_handle">
+      <input type="button" value="按钮冒泡" @click="btn_handle">
+  </div>
+  ```
+
+  点击按钮会出现冒泡事件
+
+  ![事件冒泡](pic/pic03.png)
+
+  ```html
+  <div class="inner-div" @click="div_handle">
+      <input type="button" value="按钮冒泡" @click.stop="btn_handle">
+  </div>
+  ```
+
+  阻止冒泡事件
+
+  ![阻止冒泡](pic/pic04.png)
+
+  - <font color=#e96900>`.prevent`</font> - 调用 <font color=#e96900>`event.preventDefault()`</font> 阻止默认事件。
+
+  ```html
+  <a href="http://www.baidu.com" @click.prevent="a_handle">点我，去百度</a>
+  ```
+
+  点击链接并没有进行跳转
+
+  ![阻止默认行为](pic/pic05.png)
+
+  - <font color=#e96900>`.capture`</font> - 添加事件侦听器时使用 capture （事件捕获） 模式。
+
+  ```html
+  <div class="inner-div" @click.capture="div_handle">
+      <input type="button" value="按钮冒泡" @click="btn_handle">
+  </div>
+  ```
+
+  点击按钮从外往里进行事件触发
+
+  ![捕获机制](pic/pic06.png)
+
+  - <font color=#e96900>`.self`</font> - 只当事件是从侦听器绑定的元素本身触发时才触发回调。
+
+  ```html
+  <div class="inner-div" @click.self="div_handle">
+      <input type="button" value="按钮冒泡" @click="btn_handle">
+  </div>
+  ```
+
+  点击div才会触发元素自身事件
+
+  ![自身触发](pic/pic07.png)
+
+  - <font color=#e96900>`.once`</font> - 只触发一次回调。
+
+  ```html
+  <a href="http://www.baidu.com" @click.prevent.once="a_handle">点我，去百度</a>
+  ```
+
+  
+
