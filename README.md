@@ -169,7 +169,7 @@ graph LR
 
 ## `v-for`
 
-### 用 <font color=#e96900>`v-for`</font> 把一个数组对应为一组元素
+### 用 `v-for` 把一个数组对应为一组元素
 
 我们用 <font color=#e96900>`v-for`</font> 指令根据一组数组的选项列表进行渲染。<font color=#e96900>`v-for`</font> 指令需要使用 <font color=#e96900>`item in items`</font> 形式的特殊语法，<font color=#e96900>`items`</font> 是源数据数组并且 <font color=#e96900>`item`</font> 是数组元素迭代的别名。
 *循环基本数组*
@@ -205,7 +205,7 @@ var vm = new Vue({
     methods: {}
 })
 ```
-### 一个对象的 <font color=#e96900>`v-for`</font>
+### 一个对象的 `v-for`
 
 也可以用 <font color=#e96900>`v-for`</font> 通过一个对象的属性来迭代。
 
@@ -229,7 +229,7 @@ var vm = new Vue({
 })
 ```
 > 在遍历对象时，是按 `Object.keys()` 的结果遍历，但是不能保证它的结果在不同的 JavaScript 引擎下是一致的。
-### 一段取值范围的 <font color=#e96900>`v-for`</font>
+### 一段取值范围的 `v-for`
 
 <font color=#e96900>`v-for`</font> 也可以取整数。在这种情况下，它将重复多次模板。
 
@@ -252,13 +252,38 @@ var vm = new Vue({
 </p>
 ```
 
-> 不要使用对象或数组之类的非原始类型值作为 `v-for` 的 `key`。用字符串或数类型的值取而代之。
+> 不要使用对象或数组之类的非原始类型值作为 <font color=#e96900>`v-for`</font> 的 <font color=#e96900>`key`</font>。用字符串或数类型的值取而代之。
 
 
 
+## `v-if`
 
+`v-if` 指令用于条件性地渲染一块内容。这块内容只会在指令的表达式返回 truthy 值的时候被渲染。
 
+## `v-show`
 
+另一个用于根据条件展示元素的选项是 `v-show` 指令。
+
+```html
+<div id="app">
+    <input type="button" value="toggle" @click="flag=!flag">
+    <h3 v-if="flag">这是用 v-if 控制的元素</h3>
+    <h3 v-show="flag">这是用 v-show 控制的元素</h3>
+</div>
+```
+不同的是带有 `v-show` 的元素始终会被渲染并保留在 DOM 中。`v-show` 只是简单地切换元素的 CSS 属性 `display`。
+
+![v-if和v-show的区别](pic/pic08.png)
+
+### v-if 和 v-show 比较
+
+`v-if` 是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。
+
+`v-if` 也是**惰性的**：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+
+相比之下，`v-show` 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
+
+一般来说，`v-if` 有更高的切换开销，而 `v-show` 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 `v-show` 较好；如果在运行时条件很少改变，则使用 `v-if` 较好。
 
 # 在 Vue 中使用样式
 
