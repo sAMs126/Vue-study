@@ -463,7 +463,11 @@ new Vue({
     <h1 :style="{color:'red', 'font-style': 'italic'}">{{dt | dateFormat("yyyy-MM-dd")}}</h1>
 </div>
 ```
-
+> 根据给定长度自动在字符串的前面补充想补充的字符串（只返回修改后的字符串，不修改原字符串）
+>
+> str.padStart(targetLength [, padString])	从头添加
+>
+> str.padEnd(targetLength [, padString])	 从尾添加
 ```js
 var vm2 = new Vue({
     el: '#app2',
@@ -476,24 +480,32 @@ var vm2 = new Vue({
         dateFormat: function (dateStr, pattern="") {
             var dt = new Date(dateStr)
             // 手动拼接处 yyyy-mm-dd 格式
-            var y = dt.getFullYear()
-            var m = dt.getMonth() + 1 < 10 ? "0" + (dt.getMonth() + 1) : dt.getMonth() + 1;
-            var d = dt.getDate() < 10 ? "0" + dt.getDate() : dt.getDate();
+            var y = dt.getFullYear();
+            var m = (dt.getMonth() + 1).toString().padStart(2, '0');
+            var d = dt.getDate().toString().padStart(2, '0');
             // 返回模板字符串
             // return `${y}-${m}-${d}`
 
             if ('yyyy-mm-dd' === pattern.toLowerCase()) {
                 return `${y}-${m}-${d} ~~~~`
             }else {
-                var hh = dt.getHours() < 10 ? "0" + dt.getHours() : dt.getHours();
-                var mm = dt.getMinutes() < 10 ? "0" + dt.getMinutes() : dt.getMinutes();
-                var ss = dt.getSeconds() < 10 ? "0" + dt.getSeconds() : dt.getSeconds();
+                var hh = dt.getHours().toString().padStart(2, '0');
+                var mm = dt.getMinutes().toString().padStart(2, '0');
+                var ss = dt.getSeconds().toString().padStart(2, '0');
 
                 return `${y}-${m}-${d} ${hh}:${mm}:${ss} ~~~~`
             }
         }
     }
 })
+```
+
+# 按键修饰符
+
+在监听键盘事件时，我们经常需要检查详细的按键。Vue 允许为 `v-on` 在监听键盘事件时添加按键修饰符：
+
+```html
+
 ```
 
 

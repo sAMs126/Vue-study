@@ -22,7 +22,7 @@
                 </label>
                 <label >
                     Name:
-                    <input type="text" class="form-control" v-model="name">
+                    <input type="text" class="form-control" v-model="name" v-on:keyup.enter="add">
                 </label>
                 
                 <input type="button" class="btn btn-primary" value="添加" @click="add">
@@ -169,18 +169,18 @@
             dateFormat: function (dateStr, pattern="") {
                 var dt = new Date(dateStr)
                 // 手动拼接处 yyyy-mm-dd 格式
-                var y = dt.getFullYear()
-                var m = dt.getMonth() + 1 < 10 ? "0" + (dt.getMonth() + 1) : dt.getMonth() + 1;
-                var d = dt.getDate() < 10 ? "0" + dt.getDate() : dt.getDate();
+                var y = dt.getFullYear();
+                var m = (dt.getMonth() + 1).toString().padStart(2, '0');
+                var d = dt.getDate().toString().padStart(2, '0');
                 // 返回模板字符串
                 // return `${y}-${m}-${d}`
 
                 if ('yyyy-mm-dd' === pattern.toLowerCase()) {
                     return `${y}-${m}-${d} ~~~~`
                 }else {
-                    var hh = dt.getHours() < 10 ? "0" + dt.getHours() : dt.getHours();
-                    var mm = dt.getMinutes() < 10 ? "0" + dt.getMinutes() : dt.getMinutes();
-                    var ss = dt.getSeconds() < 10 ? "0" + dt.getSeconds() : dt.getSeconds();
+                    var hh = dt.getHours().toString().padStart(2, '0');
+                    var mm = dt.getMinutes().toString().padStart(2, '0');
+                    var ss = dt.getSeconds().toString().padStart(2, '0');
 
                     return `${y}-${m}-${d} ${hh}:${mm}:${ss} ~~~~`
                 }
