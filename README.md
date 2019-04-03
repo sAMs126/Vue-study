@@ -505,7 +505,10 @@ var vm2 = new Vue({
 在监听键盘事件时，我们经常需要检查详细的按键。Vue 允许为 `v-on` 在监听键盘事件时添加按键修饰符：
 
 ```html
-
+<label >
+    Name:
+    <input type="text" class="form-control" v-model="name" v-on:keyup.enter="add">
+</label>
 ```
 
 
