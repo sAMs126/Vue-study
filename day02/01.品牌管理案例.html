@@ -29,7 +29,7 @@
 
                 <label >
                     搜索名称关键字:
-                    <input type="text" class="form-control" v-model="keywords">
+                    <input type="text" class="form-control" v-model="keywords" v-focus>
                 </label>
             </div>
         </div>
@@ -85,6 +85,18 @@
             var ss = dt.getSeconds() < 10 ? "0" + dt.getSeconds() : dt.getSeconds();
 
             return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+        }
+    })
+
+    // 全局自定义指令
+    // 参数 1 : 指令名称，此时不需要 v- 前缀
+    // 参数 2 : 在特定阶段执行操作的对象
+    Vue.directive('focus', {
+        // 当被绑定的元素插入到 DOM 中时
+        // 第一个元素，永远是 el ，表示被绑定指令的那个元素，这个 el 参数是 js 的原生对象
+        inserted: function (el) {
+            // 聚焦元素
+            el.focus()
         }
     })
 
