@@ -228,7 +228,7 @@ var vm = new Vue({
     methods: {}
 })
 ```
-
+> 在遍历对象时，是按 `Object.keys()` 的结果遍历，但是不能保证它的结果在不同的 JavaScript 引擎下是一致的。
 ### 一段取值范围的 <font color=#e96900>`v-for`</font>
 
 <font color=#e96900>`v-for`</font> 也可以取整数。在这种情况下，它将重复多次模板。
@@ -237,9 +237,22 @@ var vm = new Vue({
 <p v-for="count in 5" >第 {{count}} 次循环</p>
 ```
 
+### <font color=#e96900>`key`</font>
 
+当 Vue.js 用 `v-for` 正在更新已渲染过的元素列表时，它默认用“就地复用”策略。如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序， 而是简单复用此处每个元素，并且确保它在特定索引下显示已被渲染过的每个元素。
 
-> 在遍历对象时，是按 `Object.keys()` 的结果遍历，但是不能保证它的结果在不同的 JavaScript 引擎下是一致的。
+这个默认的模式是高效的，但是只适用于**不依赖子组件状态或临时 DOM 状态 (例如：表单输入值) 的列表渲染输出**。
+
+为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一 <font color=#e96900>`key`</font> 属性。理想的 <font color=#e96900>`key`</font> 值是每项都有的唯一 id。
+
+```html
+<p v-for="item in list" :key="item.id">
+    <input type="checkbox" name="" id="">
+    {{item.id}} -- {{item.name}}
+</p>
+```
+
+> 不要使用对象或数组之类的非原始类型值作为 `v-for` 的 `key`。用字符串或数类型的值取而代之。
 
 
 
