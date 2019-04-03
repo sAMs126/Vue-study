@@ -44,7 +44,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="car in carList" :key="car.id">
+                <!-- <tr v-for="car in carList" :key="car.id"> -->
+                <!-- 之前， v-for 中的数据是从 data 中的 carList 直接渲染过来的 -->
+                <!-- 现在， 我们通过自定义个 search 方法，同时把关键字传递给 search 方法 -->
+                <!-- 在 search 方法内部， 执行 for 循环，把所有符合关键字的数据保存到新数组中，并返回 -->
+                <tr v-for="car in search(keywords)" :key="car.id">
                     <td>{{car.id}}</td>
                     <td v-text="car.name"></td>
                     <td>{{car.ctime}}</td>
@@ -67,7 +71,8 @@
                 {id: 1, name: '奔驰', ctime: new Date()},
                 {id: 2, name: '宝马', ctime: new Date()},
                 {id: 3, name: '奥迪', ctime: new Date()},
-                {id: 4, name: '福特', ctime: new Date()}
+                {id: 4, name: '福特', ctime: new Date()},
+                {id: 5, name: '奔腾', ctime: new Date()}
             ]
         },
         methods: {
@@ -103,6 +108,25 @@
                 })
                 // console.log(i)
                 this.carList.splice(i, 1)
+            },
+            search(keywords){
+                /* var newList = []
+                this.carList.forEach(car => {
+                    // 测试结果详见 pic/pic09.png
+                    if (car.name.indexOf(keywords) != -1) {
+                        newList.push(car)
+                    }
+                });
+                return newList; */
+
+                // ** firEach some filter findIndex 这些都属于数组 ES6 的新方法
+                // 都会对数组中的每一项，进行遍历，执行相关操作
+                return this.carList.filter(car => {
+                    if (car.name.includes(keywords)) {
+                        return car
+                    }
+                });
+
             }
         }
     })
