@@ -1,3 +1,5 @@
+[TOC]
+
 # 什么是Vue.js
 
 - Vue.js 是目前最火的一个前端框架，React是最流行的一个前端框架（React除了开发网站，还可以开发手机App， Vue语法也是可以用于进行手机App开发的，需要借助于Weex）
@@ -397,6 +399,108 @@ var vm = new Vue({
     methods: {}
 })
 ```
+
+# 过滤器
+
+Vue.js 允许你自定义过滤器，可被用于一些常见的文本格式化。过滤器可以用在两个地方：**双花括号插值和 v-bind 表达式** 。过滤器应该被添加在 JavaScript 表达式的尾部，由“管道”符号指示：
+
+> 过滤器函数总接收表达式的值 (之前的操作链的结果) 作为第一个参数。
+>
+> 过滤器的 function ，第一个参数已经规定死了，永远是管道符前面传递过来的数据
+
+过滤器是 JavaScript 函数，因此可以接收参数：
+
+```html
+<p>{{ message | filterA('arg1', arg2) }}</p>
+```
+
+这里，`filterA` 被定义为接收三个参数的过滤器函数。其中 `message` 的值作为第一个参数，普通字符串 `'arg1'` 作为第二个参数，表达式 `arg2` 的值作为第三个参数。
+
+> 同名过滤器遵从<font color=#e96900>`就近原则`</font>， 私有过滤器 > 全局过滤器
+
+## 全局过滤器
+
+*在创建 Vue 实例之前全局定义过滤器*
+
+所有的 vm 实例都共享
+
+```js
+// 全局过滤器，实现时间的格式化
+// ** 在创建 Vue 实例之前定义全局过滤器
+// pattern="" ES6 形参初始默认值，防止undefined情况
+Vue.filter('dateFormat', function (dateStr, pattern="") {
+    var dt = new Date(dateStr)
+    // 手动拼接处 yyyy-mm-dd 格式
+    var y = dt.getFullYear()
+    var m = dt.getMonth() + 1 < 10 ? "0" + (dt.getMonth() + 1) : dt.getMonth() + 1;
+    var d = dt.getDate() < 10 ? "0" + dt.getDate() : dt.getDate();
+    // 返回模板字符串
+    // return `${y}-${m}-${d}`
+
+    if ('yyyy-mm-dd' === pattern.toLowerCase()) {
+        return `${y}-${m}-${d}`
+    }else {
+        var hh = dt.getHours() < 10 ? "0" + dt.getHours() : dt.getHours();
+        var mm = dt.getMinutes() < 10 ? "0" + dt.getMinutes() : dt.getMinutes();
+        var ss = dt.getSeconds() < 10 ? "0" + dt.getSeconds() : dt.getSeconds();
+
+        return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+    }
+})
+
+
+new Vue({
+  // ...
+})
+```
+
+## 私有过滤器
+
+*在一个组件的选项中定义本地的过滤器*
+
+```html
+<div id="app2">
+    <h1 :style="{color:'red', 'font-style': 'italic'}">{{dt | dateFormat("yyyy-MM-dd")}}</h1>
+</div>
+```
+
+```js
+var vm2 = new Vue({
+    el: '#app2',
+    data:{
+        dt: new Date()
+    },
+    methods: {},
+    filters: {
+        // 定义私有过滤器
+        dateFormat: function (dateStr, pattern="") {
+            var dt = new Date(dateStr)
+            // 手动拼接处 yyyy-mm-dd 格式
+            var y = dt.getFullYear()
+            var m = dt.getMonth() + 1 < 10 ? "0" + (dt.getMonth() + 1) : dt.getMonth() + 1;
+            var d = dt.getDate() < 10 ? "0" + dt.getDate() : dt.getDate();
+            // 返回模板字符串
+            // return `${y}-${m}-${d}`
+
+            if ('yyyy-mm-dd' === pattern.toLowerCase()) {
+                return `${y}-${m}-${d} ~~~~`
+            }else {
+                var hh = dt.getHours() < 10 ? "0" + dt.getHours() : dt.getHours();
+                var mm = dt.getMinutes() < 10 ? "0" + dt.getMinutes() : dt.getMinutes();
+                var ss = dt.getSeconds() < 10 ? "0" + dt.getSeconds() : dt.getSeconds();
+
+                return `${y}-${m}-${d} ${hh}:${mm}:${ss} ~~~~`
+            }
+        }
+    }
+})
+```
+
+
+
+
+
+
 
 
 
