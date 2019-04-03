@@ -167,6 +167,10 @@ graph LR
 
   在表单控件或者组件上创建双向绑定。
 
+## `v-for`
+
+
+
 # 在 Vue 中使用样式
 
 ## 使用 class 样式
@@ -241,6 +245,39 @@ var vm = new Vue({
 
 ```html
 <h1 :style="{color:'red', 'font-weight':200}">Look! Styles, Manipulate Text, Colors, Boxes and more...</h1>
+```
+
+直接绑定到一个样式对象通常更好，这会让模板更清晰：
+
+```html
+<h1 :style="styleObj1">Look! Styles, Manipulate Text, Colors, Boxes and more...</h1>
+```
+
+```js
+var vm = new Vue({
+    el: '#app',
+    data: {
+        styleObj1: {color:'red', 'font-weight':200}
+    },
+    methods: {}
+})
+```
+
+<font color=#e96900>`v-bind:style`</font> 的数组语法可以将多个样式对象应用到同一个元素上：
+
+```html
+<h1 :style="[styleObj1, styleObj2]">Look! Styles, Manipulate Text, Colors, Boxes and more...</h1>
+```
+
+```js
+var vm = new Vue({
+    el: '#app',
+    data: {
+        styleObj1: {color:'red', 'font-weight':200},
+        styleObj2: {'font-style': 'italic'}
+    },
+    methods: {}
+})
 ```
 
 

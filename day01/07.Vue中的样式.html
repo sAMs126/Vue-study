@@ -38,7 +38,8 @@
         <!-- style -->
         <!-- 属性名包含 - 则必须添加单引号 -->
         <!-- <h1 :style="{color:'red', 'font-weight':200}">Look! Styles, Manipulate Text, Colors, Boxes and more...</h1> -->
-        <h1 :style="{color:'red', 'font-weight':200}">Look! Styles, Manipulate Text, Colors, Boxes and more...</h1>
+        <!-- <h1 :style="styleObj1">Look! Styles, Manipulate Text, Colors, Boxes and more...</h1> -->
+        <h1 :style="[styleObj1, styleObj2]">Look! Styles, Manipulate Text, Colors, Boxes and more...</h1>
     </div>
 
     <script>
@@ -51,8 +52,9 @@
                 thin: false,
                 italic: true,
                 active: false
-            }
-            
+            },
+            styleObj1: {color:'red', 'font-weight':200},
+            styleObj2: {'font-style': 'italic'}
         },
         methods: {
 
