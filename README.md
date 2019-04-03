@@ -169,6 +169,82 @@ graph LR
 
 ## `v-for`
 
+### 用 <font color=#e96900>`v-for`</font> 把一个数组对应为一组元素
+
+我们用 <font color=#e96900>`v-for`</font> 指令根据一组数组的选项列表进行渲染。<font color=#e96900>`v-for`</font> 指令需要使用 <font color=#e96900>`item in items`</font> 形式的特殊语法，<font color=#e96900>`items`</font> 是源数据数组并且 <font color=#e96900>`item`</font> 是数组元素迭代的别名。
+*循环基本数组*
+```html
+<p v-for="(item, index) in items">索引：{{index}} -- 元素：{{item}}</p>
+```
+
+```js
+var vm = new Vue({
+    el: '#app',
+    data: {
+        items: [1, 2, 3, 4, 5]
+    },
+    methods: {}
+})
+```
+*循环对象数组*
+```html
+<p v-for="(user, index) in users">id: {{user.id}} -- name: {{user.name}} -- index: {{index}}</p>
+```
+
+```js
+var vm = new Vue({
+    el: '#app',
+    data: {
+        users:[
+            {id: 1, name: 'zs'},
+            {id: 2, name: 'ls'},
+            {id: 3, name: 'ww'},
+            {id: 4, name: 'zl'},
+        ]
+    },
+    methods: {}
+})
+```
+### 一个对象的 <font color=#e96900>`v-for`</font>
+
+也可以用 <font color=#e96900>`v-for`</font> 通过一个对象的属性来迭代。
+
+第一个的参数为属性，第二个的参数为键名，第三个参数为索引。
+
+```html
+<p v-for="(val, key, index) in user" >值：{{val}} -- 键：{{key}} -- 索引：{{index}}</p>
+```
+
+```js
+var vm = new Vue({
+    el: '#app',
+    data: {
+        user:{
+            id: 1,
+            name: 'Tony Stark',
+            gender: 'man'
+        }
+    },
+    methods: {}
+})
+```
+
+### 一段取值范围的 <font color=#e96900>`v-for`</font>
+
+<font color=#e96900>`v-for`</font> 也可以取整数。在这种情况下，它将重复多次模板。
+
+```html
+<p v-for="count in 5" >第 {{count}} 次循环</p>
+```
+
+
+
+> 在遍历对象时，是按 `Object.keys()` 的结果遍历，但是不能保证它的结果在不同的 JavaScript 引擎下是一致的。
+
+
+
+
+
 
 
 # 在 Vue 中使用样式
