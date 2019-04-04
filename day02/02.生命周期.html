@@ -16,7 +16,7 @@
 </head>
 <body>
     <div id="app" @click="changeMsg()" class="div">
-        <p>{{msg}}</p>
+        <p id="p">{{msg}}</p>
     </div>
 
     <script>
@@ -51,20 +51,23 @@
             console.log("%c%s", "color:red", "data : " + this.$data); //已被初始化
             console.log("%c%s", "color:red", "msg  : " + this.msg); //已被初始化 
         },
-/*         beforeUpdate() {
+        beforeUpdate() {
             console.group('beforeUpdate 更新前状态===============》');
             console.log("%c%s", "color:red", "el   : " + this.$el);
             console.log(this.$el);
-            console.log("%c%s", "color:red", "data : " + this.$data);
+            console.log("%c%s", "color:red", "data : " + this.$data.msg);
+            console.log("%c%s", "color:red", "{{}} : " + document.getElementById('p').innerText);
             console.log("%c%s", "color:red", "msg  : " + this.msg);
         },
         updated() {
             console.group('updated 更新完成状态===============》');
             console.log("%c%s", "color:red", "el   : " + this.$el);
             console.log(this.$el);
-            console.log("%c%s", "color:red", "data : " + this.$data);
+            console.log("%c%s", "color:red", "data : " + this.$data.msg);
+            console.log("%c%s", "color:red", "{{}} : " + document.getElementById('p').innerText);
             console.log("%c%s", "color:red", "msg  : " + this.msg);
         },
+        // ** vm.$destroy()
         beforeDestroy() {
             console.group('beforeDestroy 销毁前状态===============》');
             console.log("%c%s", "color:red", "el   : " + this.$el);
@@ -78,7 +81,7 @@
             console.log(this.$el);
             console.log("%c%s", "color:red", "data : " + this.$data);
             console.log("%c%s", "color:red", "msg  : " + this.msg);
-        }, */
+        },
         methods: {
             changeMsg() {
                 this.msg = "明天是周五吗？";
