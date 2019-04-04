@@ -29,7 +29,7 @@
 
                 <label >
                     搜索名称关键字:
-                    <input type="text" class="form-control" v-model="keywords" v-focus>
+                    <input type="text" class="form-control" v-model="keywords" v-focus v-color="'red'">
                 </label>
             </div>
         </div>
@@ -61,7 +61,8 @@
     </div>
     
     <div id="app2">
-        <h1 :style="{color:'red', 'font-style': 'italic'}">{{dt | dateFormat("yyyy-MM-dd")}}</h1>
+        <!-- <h1 :style="{color:'red', 'font-style': 'italic'}">{{dt | dateFormat("yyyy-MM-dd")}}</h1> -->
+        <h1 v-color="'blue'" v-fw="600" v-fs="50">{{dt | dateFormat("yyyy-MM-dd")}}</h1>
     </div>
 
     <script>
@@ -97,6 +98,15 @@
         inserted: function (el) {
             // 聚焦元素
             el.focus()
+        }
+    })
+
+    Vue.directive('color', {
+        bind: function (el, binding) {
+            el.style.color = binding.value
+            // console.log('name:' + binding.name)
+            // console.log('value:' + binding.value)
+            // console.log('expr:' + binding.expression)
         }
     })
 
@@ -196,6 +206,19 @@
 
                     return `${y}-${m}-${d} ${hh}:${mm}:${ss} ~~~~`
                 }
+            }
+        },
+        directives: {
+            // 自定义私有指令
+            fw: {
+                bind: function (el, binding) {
+                    el.style.fontWeight = binding.value
+                }
+            },
+            // 函数简写
+            fs: function (el, binding) {
+                // 这个 function 等同于直接将指令绑定到 bind 和 update 中
+                el.style.fontSize = parseInt(binding.value) + 'px'
             }
         }
     })
