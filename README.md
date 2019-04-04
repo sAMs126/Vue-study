@@ -568,6 +568,10 @@ directives: {
 
 - `oldVnode`：上一个虚拟节点，仅在 `update` 和 `componentUpdated` 钩子中可用。
 
+# 生命周期
+
+![生命周期图示](pic/pic10.png)
+
 
 
 **译者注**
