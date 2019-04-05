@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <script src="../lib/vue-resource-1.3.4.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label>
+                    Name:
+                    <input type="text" class="form-control" v-model="name" @keyup.enter="add">
+                </label>
+                <input type="button" class="btn btn-primary" value="添加" @click="add">
+            </div>
+        </div>
+
+        <table class="table table-hover table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Ctime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="car in list" :key="car.id">
+                    <td v-text="car.id"></td>
+                    <td v-text="car.name"></td>
+                    <td>{{car.ctime | dateFormat}}</td>
+                    <td><a href="#" @click.prevent="del(car.id)">删除</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        Vue.filter('dateFormat', function (dateStr, pattern = "") {
+            var dt = new Date(dateStr)
+            // 手动拼接处 yyyy-mm-dd 格式
+            var y = dt.getFullYear();
+            var m = (dt.getMonth() + 1).toString().padStart(2, '0');
+            var d = dt.getDate().toString().padStart(2, '0');
+            // 返回模板字符串
+            // return `${y}-${m}-${d}`
+
+            if ('yyyy-mm-dd' === pattern.toLowerCase()) {
+                return `${y}-${m}-${d}`
+            } else {
+                var hh = dt.getHours().toString().padStart(2, '0');
+                var mm = dt.getMinutes().toString().padStart(2, '0');
+                var ss = dt.getSeconds().toString().padStart(2, '0');
+
+                return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+            }
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                list: [
+                    { id: 1, name: '奔驰', ctime: new Date() },
+                    { id: 2, name: '宝马', ctime: new Date() }
+                ]
+            },
+            created() {
+                // data 和 method 初始化完毕
+                // 发起请求要尽早
+                this.getAllList()
+            },
+            methods: {
+                add() {
+
+                },
+                getAllList() {
+                    this.$http.get('http://www.liulongbin.top:3005/api/getprodlist').then(result => {
+                        // console.log(result)
+                        if (0 === result.body.status) {
+                            // 成功
+                            console.log("获取列表成功!")
+                            this.list = result.body.message
+                        }else {
+                            // 失败
+                            console.log("获取列表失败!")
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
