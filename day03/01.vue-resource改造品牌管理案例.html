@@ -40,6 +40,7 @@
                     <td v-text="car.id"></td>
                     <td v-text="car.name"></td>
                     <td>{{car.ctime | dateFormat}}</td>
+                    <!-- 阻止默认事件 -->
                     <td><a href="#" @click.prevent="del(car.id)">删除</a></td>
                 </tr>
             </tbody>
@@ -82,19 +83,46 @@
                 this.getAllList()
             },
             methods: {
-                add() {
-
-                },
                 getAllList() {
                     this.$http.get('http://www.liulongbin.top:3005/api/getprodlist').then(result => {
                         // console.log(result)
                         if (0 === result.body.status) {
                             // 成功
-                            console.log("获取列表成功!")
+                            // console.log("获取列表成功!")
                             this.list = result.body.message
-                        }else {
+                        } else {
                             // 失败
-                            console.log("获取列表失败!")
+                            // console.log("获取列表失败!")
+                            alert("获取列表失败!")
+                        }
+                    })
+                },
+                add() {
+                    this.$http.post('http://www.liulongbin.top:3005/api/addproduct', { name: this.name }, { emulateJSON: true }).then(result => {
+                        if (0 === result.body.status) {
+                            // 成功
+                            console.log("获取列表成功!")
+                            // alert("添加数据成功!")
+                            // 手动更新列表
+                            this.getAllList()
+                            // 清空 input
+                            this.name = ''
+                        } else {
+                            // 失败
+                            alert("添加数据失败!")
+                        }
+                    })
+                },
+                del(id) {
+                    this.$http.get('http://www.liulongbin.top:3005/api/delproduct/' + id).then(result => {
+                        // console.log(result)
+                        if (0 === result.body.status) {
+                            // 成功
+                            console.log("删除数据成功!")
+                            this.getAllList()
+                        } else {
+                            // 失败
+                            alert("删除数据成功!")
                         }
                     })
                 }
