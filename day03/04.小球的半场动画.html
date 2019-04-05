@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <style>
+        .ball{
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="点击" @click="show = !show">
+        <transition
+        @before-enter="beforeEnter"
+        @enter="enter"
+        @after-enter="afterEnter">
+            <div class="ball" v-if="show"></div>
+        </transition>
+    </div>
+
+    <script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            show: false
+        },
+        methods: {
+            // 第一个参数 el 标识要执行动画的那个 DOM 元素，即原生 JS DOM 对象，可理解为是通过 document.getElementById('') 获取 原生 DOM 对象
+            beforeEnter(el){
+                // 动画尚未开始，设置动画开始前的起始样式
+                el.style.transform = "translate(0, 0)"
+            },
+            enter(el, done){
+            // enter(el){
+                // 动画开始运行之后的状态
+                el.offsetWidth
+                // 1.设置结束位置
+                el.style.transform = "translate(150px, 450px)"
+                // 2.设置过渡属性
+                el.style.transition = "all .7s ease"
+                // 当只用 JavaScript 过渡的时候，在 enter 和 leave 中必须使用 done 进行回调。否则，它们将被同步调用，过渡会立即完成。
+                // 其实就是 afterEnter 函数的引用
+                done()
+            },
+            afterEnter(el){
+                // 动画完成之后调用
+                this.show = false
+            }
+        }
+    })
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <style>
+        .list-item {
+            padding: 20px;
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 20px;
+            border: 1px dashed #999;
+            transition: all 1s;
+        }
+        .list-item:hover {
+            background-color: teal;
+        }
+
+        /* .list-enter-active, */
+        .list-leave-active {
+            /* transition: all 1s; */
+            position: absolute;
+        }
+
+        .list-enter,
+        .list-leave-to
+        /* .list-leave-active for below version 2.1.8 */
+            {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="list-demo" class="demo">
+        <button v-on:click="add">Add</button>
+        <button v-on:click="remove">Remove</button>
+        <!-- appear 实现元素入场效果 -->
+        <transition-group name="list" tag="p" appear>
+            <span v-for="item in items" :key="item" class="list-item">
+                {{ item }}
+            </span>
+        </transition-group>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#list-demo',
+            data: {
+                items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                nextNum: 10
+            },
+            methods: {
+                randomIndex: function () {
+                    return Math.floor(Math.random() * this.items.length)
+                },
+                add: function () {
+                    this.items.splice(this.randomIndex(), 0, this.nextNum++)
+                },
+                remove: function () {
+                    this.items.splice(this.randomIndex(), 1)
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>
