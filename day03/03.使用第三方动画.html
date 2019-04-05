@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <link rel="stylesheet" href="../lib/animate.css">
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="toggle" @click="show = !show">
+        <!-- 使用 transition 包裹元素 -->
+        <!-- <transition enter-active-class="animated bounceInDown" leave-active-class="animated bounceOutDown">
+            <h3 v-if="show">Look! Styles, Manipulate Text, Colors, Boxes and more...</h3>
+        </transition> -->
+        <!-- :duration 统一规定动画时间 -->
+        <!-- <transition enter-active-class="bounceInDown" leave-active-class="bounceOutDown" :duration="1000"> -->
+        <!-- :duration="{enter: 500, leave: 1000} 分别指定动画时间 -->
+        <transition 
+        enter-active-class="bounceIn" 
+        leave-active-class="bounceOut" 
+        :duration="{enter: 500, leave: 1000}">
+            <h3 v-if="show" class="animated">Look! Styles, Manipulate Text, Colors, Boxes and more...</h3>
+        </transition>
+        <hr>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                show: true
+            },
+            methods: {}
+        })
+    </script>
+</body>
+
+</html>
