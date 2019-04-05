@@ -68,6 +68,11 @@
             }
         })
 
+        // 使用 vue-resource 设置默认根目录，调用时使用相对路径进行拼接
+        Vue.http.options.root = 'http://www.liulongbin.top:3005/';
+        // 全局启用 emulateJSON 选项
+        Vue.http.options.emulateJSON = true;
+
         var vm = new Vue({
             el: '#app',
             data: {
@@ -84,7 +89,8 @@
             },
             methods: {
                 getAllList() {
-                    this.$http.get('http://www.liulongbin.top:3005/api/getprodlist').then(result => {
+                    // this.$http.get('http://www.liulongbin.top:3005/api/getprodlist').then(result => {
+                    this.$http.get('api/getprodlist').then(result => {
                         // console.log(result)
                         if (0 === result.body.status) {
                             // 成功
@@ -98,10 +104,12 @@
                     })
                 },
                 add() {
-                    this.$http.post('http://www.liulongbin.top:3005/api/addproduct', { name: this.name }, { emulateJSON: true }).then(result => {
+                    // this.$http.post('http://www.liulongbin.top:3005/api/addproduct', { name: this.name }, { emulateJSON: true }).then(result => {
+                    // this.$http.post('api/addproduct', { name: this.name }, { emulateJSON: true }).then(result => {
+                    this.$http.post('api/addproduct', { name: this.name }, {}).then(result => {
                         if (0 === result.body.status) {
                             // 成功
-                            console.log("获取列表成功!")
+                            console.log("添加数据成功!")
                             // alert("添加数据成功!")
                             // 手动更新列表
                             this.getAllList()
@@ -114,7 +122,8 @@
                     })
                 },
                 del(id) {
-                    this.$http.get('http://www.liulongbin.top:3005/api/delproduct/' + id).then(result => {
+                    // this.$http.get('http://www.liulongbin.top:3005/api/delproduct/' + id).then(result => {
+                    this.$http.get('api/delproduct/' + id).then(result => {
                         // console.log(result)
                         if (0 === result.body.status) {
                             // 成功
