@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <style>
+        /* 自定义两组样式来控制 transition 内部元素实现的动画*/
+        /* v-enter [时间点] 进入之前元素的起始位置，此时还没有开始进入 */
+        /* v-leave-to [时间点] 元素离开之后，最终的结束状态 */
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform: translateX(150px)
+        }
+        /* v-enter-active [时间段] 应用在整个进入过渡的过程中 */
+        /* v-leave-active [时间段] 应用在整个离开过渡的过程中 */
+        .v-enter-active,
+        .v-leave-active{
+            transition: all .7s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="toggle" @click="show = !show">
+        <!-- 使用 transition 包裹元素 -->
+        <transition>
+            <h3 v-if="show">Look! Styles, Manipulate Text, Colors, Boxes and more...</h3>
+        </transition>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                show: true
+            },
+            methods: {}
+        })
+    </script>
+</body>
+
+</html>

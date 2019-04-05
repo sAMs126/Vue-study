@@ -572,6 +572,67 @@ directives: {
 
 ![生命周期图示](pic/pic10.png)
 
+# 动画
+
+Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用过渡效果。
+
+## 单元素/组件的过渡
+
+Vue 提供了 <font color=#e96900>`transition`</font> 的封装组件，在下列情形中，可以给任何元素和组件添加进入/离开过渡
+
+- 条件渲染 (使用 `v-if`)
+- 条件展示 (使用 `v-show`)
+- 动态组件
+- 组件根节点
+
+当插入或删除包含在 <font color=#e96900>`transition`</font> 组件中的元素时，Vue 将会做以下处理：
+
+1. 自动嗅探目标元素是否应用了 CSS 过渡或动画，如果是，在恰当的时机添加/删除 CSS 类名。
+2. 如果过渡组件提供了 JavaScript 钩子函数，这些钩子函数将在恰当的时机被调用。
+3. 如果没有找到 JavaScript 钩子并且也没有检测到 CSS 过渡/动画，DOM 操作 (插入/删除) 在下一帧中立即执行。(注意：此指浏览器逐帧动画机制，和 Vue 的 `nextTick` 概念不同)
+
+## 过渡类名
+![过度类名](pic/pic11.png)
+
+在进入/离开的过渡中，会有 6 个 class 切换。
+
+1. <font color=#e96900>`v-enter`</font>：定义进入过渡的开始状态。在元素被插入之前生效，在元素被插入之后的下一帧移除。
+2. <font color=#e96900>`v-enter-active`</font>：定义进入过渡生效时的状态。在整个进入过渡的阶段中应用，在元素被插入之前生效，在过渡/动画完成之后移除。这个类可以被用来定义进入过渡的过程时间，延迟和曲线函数。
+3. <font color=#e96900>`v-enter-to`</font>: 定义进入过渡的结束状态。在元素被插入之后下一帧生效 (与此同时 <font color=#e96900>`v-enter`</font> 被移除)，在过渡/动画完成之后移除。
+4. <font color=#e96900>`v-leave`</font>: 定义离开过渡的开始状态。在离开过渡被触发时立刻生效，下一帧被移除。
+5. <font color=#e96900>`v-leave-active`</font>：定义离开过渡生效时的状态。在整个离开过渡的阶段中应用，在离开过渡被触发时立刻生效，在过渡/动画完成之后移除。这个类可以被用来定义离开过渡的过程时间，延迟和曲线函数。
+6. <font color=#e96900>`v-leave-to`</font>: 定义离开过渡的结束状态。在离开过渡被触发之后下一帧生效 (与此同时 <font color=#e96900>`v-leave`</font> 被删除)，在过渡/动画完成之后移除。
+
+对于这些在过渡中切换的类名来说，如果你使用一个没有名字的 `<transition>`，则 `v-` 是这些类名的默认前缀。如果你使用了 `<transition name="my-transition">`，那么 `v-enter` 会替换为 `my-transition-enter`。
+
+```html
+<div id="app">
+    <input type="button" value="toggle" @click="show = !show">
+    <!-- 使用 transition 包裹元素 -->
+    <transition>
+        <h3 v-if="show">Look! Styles, Manipulate Text, Colors, Boxes and more...</h3>
+    </transition>
+</div>
+```
+
+```css
+    <style>
+        /* 自定义两组样式来控制 transition 内部元素实现的动画*/
+        /* v-enter [时间点] 进入之前元素的起始位置，此时还没有开始进入 */
+        /* v-leave-to [时间点] 元素离开之后，最终的结束状态 */
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+        }
+        /* v-enter-active [时间段] 应用在整个进入过渡的过程中 */
+        /* v-leave-active [时间段] 应用在整个离开过渡的过程中 */
+        .v-enter-active,
+        .v-leave-active{
+            transition: all .5s ease;
+        }
+    </style>
+```
+
 
 
 **译者注**
