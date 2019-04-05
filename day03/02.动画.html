@@ -22,6 +22,18 @@
         .v-leave-active{
             transition: all .7s ease;
         }
+
+        .my-enter,
+        .my-leave-to{
+            opacity: 0;
+            transform: translateY(100px)
+        }
+        /* v-enter-active [时间段] 应用在整个进入过渡的过程中 */
+        /* v-leave-active [时间段] 应用在整个离开过渡的过程中 */
+        .my-enter-active,
+        .my-leave-active{
+            transition: all .7s ease;
+        }
     </style>
 </head>
 
@@ -32,13 +44,20 @@
         <transition>
             <h3 v-if="show">Look! Styles, Manipulate Text, Colors, Boxes and more...</h3>
         </transition>
+
+        <hr>
+        <input type="button" value="toggle" @click="flag = !flag">
+        <transition name="my">
+            <h3 style="color:blue" v-if="flag">Look! Styles, Manipulate Text, Colors, Boxes and more...</h3>
+        </transition>
     </div>
 
     <script>
         var vm = new Vue({
             el: '#app',
             data: {
-                show: true
+                show: true,
+                flag: true
             },
             methods: {}
         })
