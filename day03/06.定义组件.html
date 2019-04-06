@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 1.3 使用组件，将组件名称以 HTML 标签的形式引入（** 驼峰命名 改为 -）到页面中 -->
+        <my-com1></my-com1>
+    </div>
+
+    <script>
+        // 1.1 使用 Vue.extend 来创建全局 Vue 组件
+        var com1 = Vue.extend({
+            // 通过 template 属性，指定了组件要展示的 HTML 结构
+            template: '<h3>Vue.extend 创建的组件</h3>'
+        })
+        // 1.2 使用 Vue.component
+        Vue.component('myCom1', com1)
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>
