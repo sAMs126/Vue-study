@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <style>
+        .component-fade-enter-active,
+        .component-fade-leave-active {
+            transition: opacity .3s ease;
+        }
+
+        .component-fade-enter,
+        .component-fade-leave-to
+        /* .component-fade-leave-active for below version 2.1.8 */
+        {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <a href="#" @click.prevent="flag = true">登录</a>
+        <a href="#" @click.prevent="flag = false">注册</a> -->
+
+        <!-- 只能用于控制切换2个组件 -->
+        <!-- <login v-if="flag"></login>
+        <register v-else="flag"></register> -->
+
+        <a href="#" @click.prevent="componentId = 'login'">登录</a>
+        <a href="#" @click.prevent="componentId = 'register'">注册</a>
+        <!-- 使用动画 -->
+        <!-- out-in 上一个元素动画结束，再开始下一个元素动画 -->
+        <transition name="component-fade" mode="out-in">
+            <!-- 使用动态组件 -->
+            <component :is="componentId"></component>
+        </transition>
+    </div>
+
+
+    <script>
+        Vue.component('login', {
+            template: '<h3>登录组件</h3>'
+        })
+
+        Vue.component('register', {
+            template: '<h3>注册组件</h3>'
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                // flag: true
+                componentId: 'login'
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>
