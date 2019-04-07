@@ -763,12 +763,55 @@ Vue 提供了 <font color=#e96900>`transition`</font> 的封装组件，在下�
 
 可以通过 Vue 的 `<component>` 元素加一个特殊的 `is` 特性来实现：
 
-
+```html
+<component :is="componentId"></component>
+```
 
 在上述示例中，`is` 属性中可以包括
 
 - 已注册组件的名字，或
 - 一个组件的选项对象
+
+## 组件传值
+
+### 父组件向子组件传值
+
+> Prop 是你可以在组件上注册的一些自定义特性。当一个值传递给一个 prop 特性的时候，它就变成了那个组件实例的一个属性。我们能够在组件实例中访问这个值，就像访问 `data` 中的值一样
+
+通过 Prop 向子组件传递数据
+
+```html
+<div id="app">
+    <!-- 父组件在引用子组件时，通过 属性绑定(v-bind:) 的形式，把数据传递到子组件内部，使子组件使用 -->
+    <com1 :pmsg="msg"></com1>
+</div>
+```
+
+```js
+var vm = new Vue({
+    el: '#app',
+    data: {
+        msg: '父组件中的数据'
+    },
+    methods: {},
+    components: {
+        // 子级作用域
+        com1: {
+            data() {
+                return {
+                    // data 中的数据是其自身私有的， 可读可写
+                }
+            },
+            // 将父组件传递过来的 pmsg 属性，通过 props 定义一下，使子组件像访问 data 一样访问这个值
+            // props 是父组件传递过来的数据，只读
+            props: ['pmsg'],
+            template: '<h1>这是子组件 -- 访问父组件:{{pmsg}} </h1>'
+        }
+    }
+})
+```
+
+
 
 **译者注**
 
