@@ -668,8 +668,85 @@ Vue 提供了 <font color=#e96900>`transition`</font> 的封装组件，在下�
 
    ```html
    <div id="app">
-       <!-- 1.3 使用组件，将组件名称以 HTML 标签的形式引入（** 驼峰命名 改为 -）到页面中 -->
+       <!-- 1.3 使用组件，将组件名称以 HTML 标签的形式引入（** 驼峰命名 改为 - 小写）到页面中 -->
        <my-com1></my-com1>
+   </div>
+   ```
+   ```js
+   // 另外一种 Vue.extend 和 Vue.component 的组合
+   Vue.component('mycom1', Vue.extend({
+       template: '<h3>Vue.extend 创建的组件</h3>'
+   }))
+   ```
+   ```html
+   <div id="app">
+       <mycom1></mycom1>
+   </div>
+   ```
+
+2. 直接使用 Vue.component 方法：
+
+   ```js
+   Vue.component('mycom2', {
+       template: '<h3>Vue.component 创建的组件</h3>'
+   })
+   ```
+
+3. 使用外部 template 模板创建：
+
+   ```js
+   // 使用外部 template 模板创建
+   Vue.component('mycom3', {
+       template: '#temp1'
+   })
+   ```
+
+   ```html
+   <div id="app">
+       <mycom3></mycom3>
+   </div>
+   
+   <!-- 在被控制的 #app 外面，使用 template 元素，定义组件的 HTML 模板结构 -->
+   <template id="temp1">
+       <div>
+           <h3>Vue.component 创建的组件， 引用外部模板</h3>
+       </div>
+   </template>
+   ```
+
+> 注意： 组件中的DOM结构，有且只能有唯一的根元素（Root Element）来进行包裹！
+
+## 使用 `components` 定义私有组件
+
+1. 编写外部组件模板
+
+   ```html
+   <template id="temp2">
+       <div>
+           <h3>创建私有组件， 引用外部模板</h3>
+       </div>
+   </template>
+   ```
+
+2. 定义私有组件
+
+   ```js
+   var vm2 = new Vue({
+       el: '#app2',
+       components: {
+           // 定义实例内部私有组件
+           login: {
+               template: '#temp2'
+           }
+       }
+   })
+   ```
+
+3. 引入组件模板
+
+   ```html
+   <div id="app2">
+       <login></login>
    </div>
    ```
 

@@ -11,12 +11,32 @@
 
 <body>
     <div id="app">
-        <!-- 1.3 使用组件，将组件名称以 HTML 标签的形式引入（** 驼峰命名 改为 -）到页面中 -->
-        <my-com1></my-com1>
+        <!-- 1.3 使用组件，将组件名称以 HTML 标签的形式引入（** 驼峰命名 改为 - 小写）到页面中 -->
+        <!-- <my-com1></my-com1>
+        <mycom1></mycom1> -->
+        <!-- <mycom2></mycom2> -->
+        <mycom3></mycom3>
     </div>
 
+    <div id="app2">
+        <login></login>
+    </div>
+
+    <!-- 在被控制的 #app 外面，使用 template 元素，定义组件的 HTML 模板结构 -->
+    <template id="temp1">
+        <div>
+            <h3>Vue.component 创建的组件， 引用外部模板</h3>
+        </div>
+    </template>
+
+    <template id="temp2">
+        <div>
+            <h3>创建私有组件， 引用外部模板</h3>
+        </div>
+    </template>
+
     <script>
-        // 1.1 使用 Vue.extend 来创建全局 Vue 组件
+        /* // 1.1 使用 Vue.extend 来创建全局 Vue 组件
         var com1 = Vue.extend({
             // 通过 template 属性，指定了组件要展示的 HTML 结构
             template: '<h3>Vue.extend 创建的组件</h3>'
@@ -24,12 +44,37 @@
         // 1.2 使用 Vue.component
         Vue.component('myCom1', com1)
 
+        // 另外一种 Vue.extend 和 Vue.component 的组合
+        Vue.component('mycom1', Vue.extend({
+            template: '<h3>Vue.extend 创建的组件</h3>'
+        })) */
+
+        // 2.1 使用 Vue.component 定义组件
+        /* Vue.component('mycom2', {
+            template: '<h3>Vue.component 创建的组件</h3>'
+        }) */
+        
+        // 使用外部 template 模板创建
+        Vue.component('mycom3', {
+            template: '#temp1'
+        })
+
         var vm = new Vue({
             el: '#app',
             data: {
             },
             methods: {
 
+            }
+        })
+
+        var vm2 = new Vue({
+            el: '#app2',
+            components: {
+                // 定义实例内部私有组件
+                login: {
+                    template: '#temp2'
+                }
             }
         })
     </script>
