@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 父组件向子组件传递方法，使用的是 事件绑定机制 (v-on) -->
+        <!-- ** 传递的是方法的引用 => show，而非方法的结果: show() -->
+        <com2 @pshow="show"></com2>
+    </div>
+
+    <template id="temp1">
+        <div>
+            <h1 @click="cshow">一个子组件</h1>
+        </div>
+    </template>
+
+    <script>
+        var com2 = {
+            template: '#temp1',
+            data() {
+                return {
+                    son: {name: '子组件', value: 123}
+                }
+            },
+            methods: {
+                cshow() {
+                    // 参数一:   {string} eventName
+                    // 后续参数: [...args]
+                    this.$emit('pshow', this.son)
+                }
+            },
+        }
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                fromSon: null
+            },
+            methods: {
+                show(data) {
+                    // alert('父组件的方法 -- 传参: ' + data)
+                    // console.log(data)
+                    this.fromSon = data
+                }
+            },
+            components: {
+                // 定义子组件
+                com2,
+            }
+        })
+    </script>
+</body>
+
+</html>

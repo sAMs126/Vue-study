@@ -772,7 +772,7 @@ Vue 提供了 <font color=#e96900>`transition`</font> 的封装组件，在下�
 - 已注册组件的名字，或
 - 一个组件的选项对象
 
-## 组件传值
+## 组件传递
 
 ### 父组件向子组件传值
 
@@ -807,6 +807,53 @@ var vm = new Vue({
             props: ['pmsg'],
             template: '<h1>这是子组件 -- 访问父组件:{{pmsg}} </h1>'
         }
+    }
+})
+```
+
+### 父组件向子组件传方法
+
+父级组件可以像处理 native DOM 事件一样通过 `v-on` 监听子组件实例的任意事件：
+
+```html
+<div id="app">
+    <!-- 父组件向子组件传递方法，使用的是 事件绑定机制 (v-on) -->
+    <!-- ** 传递的是方法的引用 => show，而非方法的结果: show() -->
+    <com2 @pshow="show"></com2>
+</div>
+```
+
+同时子组件可以通过调用内建的 <font color=#e96900>`$emit`</font> 方法 并传入事件名称来触发一个事件：
+
+```html
+<template id="temp1">
+    <div>
+        <h1 @click="cshow">一个子组件</h1>
+    </div>
+</template>
+```
+
+```js
+var com2 = {
+    template: '#temp1',
+    methods: {
+        cshow() {
+            this.$emit('pshow')
+        }
+    },
+}
+
+var vm = new Vue({
+    el: '#app',
+    data: {},
+    methods: {
+        show() {
+            alert("父组件的方法")
+        }
+    },
+    components: {
+        // 定义子组件
+        com2,
     }
 })
 ```
