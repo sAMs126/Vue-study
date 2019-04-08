@@ -959,6 +959,49 @@ var vm = new Vue({
    })
    ```
 
+## 路由传参
+
+1. 使用 `query` 获取参数
+
+   ```html
+   <div id="app">
+       <router-link to="login?id=10&name=zs">登录</router-link>
+       <router-view></router-view>
+   </div>
+   ```
+
+   ```js
+   var login = {
+       // 通过 query 获取参数
+       template: '<h1>login组件 --- {{$route.query.id}} --- {{$route.query.name}}</h1>'
+   }
+   ```
+
+2. 使用 `params` 获取参数
+
+   ```html
+   <div id="app">
+       <router-link to="/login/12/ls">登录</router-link>
+       <router-view></router-view>
+   </div>
+   ```
+
+   ```js
+   var login = {
+       // 使用 params 获取参数
+       template: '<h1>login组件 --- {{$route.params.id}} --- {{$route.params.name}}</h1>'
+   }
+   ```
+
+   ```js
+   const router = new VueRouter({
+       routes: [
+           // :id 占位符，将来 / 后面跟的参数会被解析成 id ==> 使用 params 解析
+           { path: '/login/:id/:name', component: login }
+       ],
+   })
+   ```
+
    
 
 **注**
