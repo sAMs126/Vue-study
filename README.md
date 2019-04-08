@@ -1002,7 +1002,61 @@ var vm = new Vue({
    })
    ```
 
-   
+## 子路由
+
+使用 `children` 属性实现子路由
+
+> 注意：子路由的 path 前面，不要带 `/` 否则永远以根路径开始请求，不方面去理解 URL 地址
+
+```js
+const router = new VueRouter({
+    routes: [
+        {
+            path: '/account',
+            component: account,
+            children: [
+                // 和 router-link 中的 to 对应
+                // |-   /account/login ==> login
+                // |-   /login ==> login (不建议使用)
+                { path: 'login', component: login },
+                { path: 'register', component: register }
+            ]
+        },
+    ]
+})
+```
+
+```html
+<div id="app">
+    <router-link to="/account">Account</router-link>
+    <router-view></router-view>
+</div>
+
+<template id="temp1">
+    <div>
+        <h1>用户登录组件</h1>
+        <router-link to="/account/login">登录</router-link>
+        <router-link to="/account/register">注册</router-link>
+        <router-view></router-view>
+    </div>
+</template>
+```
+
+```js
+var account = {
+    template: '#temp1'
+}
+
+var login = {
+    template: '<h3>登录</h3>'
+}
+
+var register = {
+    template: '<h3>注册</h3>'
+}
+```
+
+
 
 **注**
 
