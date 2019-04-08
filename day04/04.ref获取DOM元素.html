@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="获取元素" @click="getElement">
+        <!-- ref 被用来给元素或子组件注册引用信息 -->
+        <h3 id="element" ref="element">h3 元素中的内容！！！</h3>
+        <h1 id="element" ref="elementh1">h1 元素中的内容！！！</h1>
+        <temph2 ref="tempelem"></temph2>
+    </div>
+
+    <script>
+
+        var temph2 = {
+            template: '<h2>h2 中的模板组件</h2>',
+            data() {
+                return {
+                    msg: 'son msg'
+                }
+            },
+            methods: {
+                show() {
+                    console.log('son methods')
+                }
+            },
+        }
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+            },
+            methods: {
+                getElement() {
+                    // 原始方法，操作 DOM
+                    // console.log(document.getElementById('element').innerText)
+                    // 在父组件中使用 $refs 获取注册引用信息
+                    console.log(this.$refs.element.innerText)   // ==> 获取元素文本信息
+                    console.log(this.$refs.elementh1.innerText)
+                    console.log(this.$refs.tempelem.msg)        // ==> 获取子组件 data
+                    this.$refs.tempelem.show()                  // ==> 调用子组件方法
+                }
+            },
+            components: {
+                temph2,
+            }
+        })
+    </script>
+</body>
+
+</html>

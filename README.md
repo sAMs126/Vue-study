@@ -852,6 +852,47 @@ var vm = new Vue({
 })
 ```
 
+### 父组件获取子组件的值和方法
+
+<font color=#e96900>`ref`</font> 被用来给元素或子组件注册引用信息。引用信息将会注册在父组件的 `$refs`对象上。如果用在子组件上，引用就指向组件实例：
+
+```html
+<div id="app">
+    <temph2 ref="tempelem"></temph2>
+</div>
+```
+
+```js
+var temph2 = {
+    template: '<h2>h2 中的模板组件</h2>',
+    data() {
+        return {
+            msg: 'son msg'
+        }
+    },
+    methods: {
+        show() {
+            console.log('son methods')
+        }
+    },
+}
+
+var vm = new Vue({
+    el: '#app',
+    data: {},
+    methods: {
+        getElement() {
+            // 在父组件中使用 $refs 获取注册引用信息
+            console.log(this.$refs.tempelem.msg)        // ==> 获取子组件 data
+            this.$refs.tempelem.show()                  // ==> 调用子组件方法
+        }
+    },
+    components: {
+        temph2,
+    }
+})
+```
+
 
 
 **注**
