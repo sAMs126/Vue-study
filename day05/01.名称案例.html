@@ -15,9 +15,9 @@
         <!-- <input type="text" v-model="firstname" @keyup="getFullname"> +
         <input type="text" v-model="lastname" @keyup="getFullname"> = -->
 
-        <!-- 方式 2 ： 使用 watch 监视文本框数据的变化 -->
         <input type="text" v-model="firstname"> +
         <input type="text" v-model="lastname"> =
+        <!-- ** 计算属性，在引用时，一定不要加 () 去调用，直接把它当做 [普通属性] 去使用 -->
         <input type="text" v-model="fullname">
     </div>
 
@@ -27,13 +27,16 @@
             data: {
                 firstname: '',
                 lastname: '',
-                fullname: ''
+                // 使用 computed 计算属性，不需要属性绑定 fullname
+                // fullname: ''
             },
+            // 方式 1 ：键盘抬起响应拼接事件
             methods: {
                 /* getFullname() {
                     this.fullname = this.firstname + ' - ' + this.lastname
                 } */
             },
+            // 方式 2 ：使用 watch 监视文本框数据的变化
             watch: {
                 /* 'firstname': function () {
                     // console.log(this.firstname+'发生了变化')
@@ -44,6 +47,16 @@
                 },
                 'lastname': function (newVal) {
                     this.fullname = this.firstname + ' - ' + newVal
+                }
+            },
+            // 方式 3 ：使用 computed 计算属性
+            computed: {
+                // 在 computed 中可以定义一些属性，这些属性叫做 [计算属性] ，
+                // 计算属性的本质是一个方法，只不过我们在调用这些计算属性时，是把它们的名称直接当做 [属性] 来使用，并不会把计算属性当做方法去调用
+                // ** 只要计算属性这个 function 中所引用到的值发生了变化，就会重新计算这个属性的值
+                // ** 计算属性的求值结果会被缓存起来，方便下次直接使用；如果计算属性中所依赖的任何数据都没有发生变化，则会不重新求职
+                'fullname': function () {
+                    return this.firstname + ' - ' + this.lastname
                 }
             },
         })
