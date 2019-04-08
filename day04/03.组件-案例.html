@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7.css">
+</head>
+
+<body>
+    <div id="app">
+        <cmt-box @pfunc="loadStorageComments"></cmt-box>
+        <ul class="list-group">
+            <li class="list-group-item" v-for="item in list" :key="item.id">
+                <span class="badge">评论人 ：{{item.user}} </span>
+                {{item.content}}
+            </li>
+        </ul>
+
+    </div>
+
+    <template id="tmp-input">
+        <div>
+            <div class="form-group">
+                <label>评论人：</label>
+                <input type="text" class="form-control" v-model="user">
+            </div>
+            <div class="form-group">
+                <label>评论内容：</label>
+                <textarea class="form-control" v-model="content"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="button" value="发表" class="btn btn-primary" @click="postComment">
+            </div>
+        </div>
+    </template>
+
+    <script>
+
+        var commentBox = {
+            data() {
+                return {
+                    user: '',
+                    content: ''
+                }
+            },
+            template: '#tmp-input',
+            methods: {
+                postComment() {// 发表评论的方法
+                    // 1.将评论数据组成数据对象
+                    var comment = { id: Date.now(), user: this.user, content: this.content }
+                    // 2.从 localStorage 中读取之前的数组数据，若无则返回空字符串
+                    var list = JSON.parse(localStorage.getItem('cmts') || '[]')
+                    // 3.添加最新的评论对象到原数组中，从顶部添加
+                    // list.push(comment)
+                    list.unshift(comment)
+                    // 4.将当前最新的评论数组序列化后存入 localStorage
+                    localStorage.setItem('cmts', JSON.stringify(list))
+                    this.user = this.content = ''
+                    // 调用父组件的 load 方法，刷新列表
+                    this.$emit('pfunc')
+                }
+            },
+        }
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [
+                    { id: Date.now(), user: '辛弃疾', content: '了却君王天下事，赢得生前身后名。可怜白发生。' },
+                    { id: Date.now(), user: '杜甫', content: '无边落木萧萧下，不尽长江滚滚来。' },
+                    { id: Date.now(), user: '范仲淹', content: '居庙堂之高则忧其民；处江湖之远则忧其君。' },
+                    { id: Date.now(), user: '陆游', content: '莫笑农家腊酒浑，丰年留客足鸡豚。' },
+                ]
+            },
+            created() {
+                this.loadStorageComments()
+            },
+            methods: {
+                loadStorageComments() {
+                    // 在页面加载时，从 localStorage 读取评论数组
+                    var list = JSON.parse(localStorage.getItem('cmts') || '[]')
+                    this.list = list
+                }
+            },
+            components: {
+                'cmt-box': commentBox
+            }
+        })
+    </script>
+</body>
+
+</html>
