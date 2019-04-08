@@ -893,8 +893,76 @@ var vm = new Vue({
 })
 ```
 
+# 路由
 
+## 什么是路由
+
+>1. **后端路由**：对于普通的网站，所有的超链接都是URL地址，所有的URL地址都对应服务器上对应的资源；
+>2. **前端路由**：对于单页面应用程序来说，主要通过URL中的hash(#号[^2])来实现不同页面之间的切换，同时，hash有一个特点：HTTP请求中不会包含hash相关的内容；所以，单页面程序中的页面跳转主要用hash实现；
+>3. 在单页面应用程序中，这种通过hash改变来切换页面的方式，称作前端路由（区别于后端路由）；
+
+## 在 vue 中使用 vue-router
+
+1. 导入 vue-router 组件类库：
+
+   ```js
+   <script src="../lib/vue-2.4.0.js"></script>
+   <!-- 引入 vue-router 路由模块 -->
+   <script src="../lib/vue-router-3.0.1.js"></script>
+   ```
+
+2. 使用 router-view 组件来显示匹配到的组件：
+
+   ```html
+   <div id="app">
+       <router-view></router-view>
+   </div>
+   ```
+
+3. 创建组件：
+
+   ```js
+   var login = {
+       template: '<h1>login组件</h1>'
+   }
+   var register = {
+       template: '<h1>register组件</h1>'
+   }
+   ```
+
+4. 创建 router 实例：
+
+   ```js
+   // 当导入 vue-router 之后，在 window 全局对象中，就有了一个路由的构造函数 ==> VueRouter
+   const router = new VueRouter({
+       // 这个配置对象中的 route 表示[路由匹配规则]
+       // route
+       routes: [
+           // 路由匹配规则数组
+           // |-   每个路由匹配规则都是一个对象，这个规则对象必须包含两个属性：
+           //      |-   属性 1: path 表示监听哪个路由链接地址
+           //      |-   属性 2: component 表示展示 path 匹配到的对应组件的对象
+           { path: '/login', component: login },
+           { path: '/register', component: register }
+       ]
+   })
+   ```
+
+5. 加载 router 到根实例：
+
+   ```js
+   var vm = new Vue({
+       el: '#app',
+       data: {},
+       methods: {},
+       router: router // 将路由实例挂载到根实例中
+   })
+   ```
+
+   
 
 **注**
 
 [^1]: truthy 不是 `true`，详见 [MDN](https://developer.mozilla.org/zh-CN/docs/Glossary/Truthy) 的解释。 
+[^2]: `#` 后的内容不会被发送请求，详见 [URL中的hash（井号）](http://www.cnblogs.com/joyho/articles/4430148.html) 的解释
+

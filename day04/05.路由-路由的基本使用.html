@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <!-- 引入 vue-router 路由模块 -->
+    <script src="../lib/vue-router-3.0.1.js"></script>
+    <style>
+        /* .router-link-active {
+            color: red;
+            font-weight: 800;
+            text-decoration: underline;
+            background-color: wheat;
+        } */
+
+        .linkActive {
+            color: red;
+            font-weight: 800;
+            text-decoration: underline;
+            background-color: wheat;
+        }
+
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(150px)
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all .7s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <a href="#/login">登录</a>
+        <a href="#/register">注册</a> -->
+
+        <!-- 另一种方式切换链接 -->
+        <!-- outer-link 默认渲染为一个 a 标签 -->
+        <router-link to="login" tag="span">登录</router-link>
+        <router-link to="register">注册</router-link>
+        <transition mode="out-in">
+            <router-view></router-view>
+        </transition>
+    </div>
+
+    <script>
+        var login = {
+            template: '<h1>login组件</h1>'
+        }
+        var register = {
+            template: '<h1>register组件</h1>'
+        }
+
+        // 当导入 vue-router 之后，在 window 全局对象中，就有了一个路由的构造函数 ==> VueRouter
+        const router = new VueRouter({
+            // 这个配置对象中的 route 表示[路由匹配规则]
+            // route
+            routes: [
+                // 路由匹配规则数组
+                // |-   每个路由匹配规则都是一个对象，这个规则对象必须包含两个属性：
+                //      |-   属性 1: path 表示监听哪个路由链接地址
+                //      |-   属性 2: component 表示展示 path 匹配到的对应组件的对象
+                // 使用重定向 redirect 指向指定的链接地址
+                { path: '/', redirect: '/login' },
+                { path: '/login', component: login },
+                { path: '/register', component: register }
+            ],
+            // 设置 链接激活时使用的 CSS 类名。
+            linkActiveClass: 'linkActive'
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router: router // 将路由实例挂载到根实例中
+        })
+    </script>
+</body>
+
+</html>
