@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 方式 1 ：键盘抬起响应拼接事件 -->
+        <!-- <input type="text" v-model="firstname" @keyup="getFullname"> +
+        <input type="text" v-model="lastname" @keyup="getFullname"> = -->
+
+        <!-- 方式 2 ： 使用 watch 监视文本框数据的变化 -->
+        <input type="text" v-model="firstname"> +
+        <input type="text" v-model="lastname"> =
+        <input type="text" v-model="fullname">
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                firstname: '',
+                lastname: '',
+                fullname: ''
+            },
+            methods: {
+                /* getFullname() {
+                    this.fullname = this.firstname + ' - ' + this.lastname
+                } */
+            },
+            watch: {
+                /* 'firstname': function () {
+                    // console.log(this.firstname+'发生了变化')
+                    this.fullname = this.firstname + ' - ' + this.lastname
+                }, */
+                'firstname': function (newVal, oldVal) {
+                    this.fullname = newVal + ' - ' + this.lastname
+                },
+                'lastname': function (newVal) {
+                    this.fullname = this.firstname + ' - ' + newVal
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
