@@ -1064,7 +1064,65 @@ var register = {
 > 2. `methods` 方法表示一个具体的操作，主要书写业务逻辑；
 > 3. `watch` 一个对象，键是需要观察的表达式，值是对应回调函数。主要用来监听某些特定数据的变化，从而进行某些具体的业务逻辑操作；可以看作是 `computed` 和 `methods` 的结合体；
 
+# webpack
 
+1. 项目初始化，生成 package.json 
+
+   ```
+   npm init -y
+   ```
+
+2. 构建 node_modules ，安装相关插件，如 JQuery
+
+   ```
+   npm i jquery -S
+   ```
+
+3. 配置 webpack.config.js 文件指明打包模式
+
+   > 开发者模式：
+   > ```diff
+   > mode: 'development'
+   > ```
+   > 发布模式：
+   > ```diff
+   > mode: 'production'
+   > ```
+
+   ```js
+   const path = require('path')
+   
+   // 这个配置文件，其实就是一个 JS 文件，通过 Node 中的模块操作，向外暴露了一个配置对象
+   module.exports = {
+       // 在配置文件中手动指定 入口 和 出口
+       // 入口：表示使用 webpack 打包哪个文件
+       // entry: './src/main.js',
+       entry: path.join(__dirname, './src/main.js'),
+       // 输出文件相关配置
+       output: {
+           // 指定打包好的文件输出到哪个目录中去
+           // path: './dist',
+           path: path.join(__dirname, './dist'),
+           // 指定文件名称
+           filename: 'bundle.js'
+       },
+       mode: 'development'
+   };
+   ```
+
+4. 通过终端命令进行打包
+
+   - 指明打包文件
+
+     ```
+     npx webpack ./src/main.js -o ./dist/bundle.js
+     ```
+
+   - 通过配置文件设置打包文件
+
+      ```
+     webpack
+     ```
 
 **注**
 
