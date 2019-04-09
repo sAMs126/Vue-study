@@ -1066,15 +1066,21 @@ var register = {
 
 # webpack
 
+## 什么是webpack?
+
+webpack 是前端的一个项目构建工具，它是基于 Node.js 开发出来的一个前端工具
+
+## 初步使用webpack打包构建
+
 1. 项目初始化，生成 package.json 
 
-   ```
+   ```powershell
    npm init -y
    ```
 
 2. 构建 node_modules ，安装相关插件，如 JQuery
 
-   ```
+   ```powershell
    npm i jquery -S
    ```
 
@@ -1114,15 +1120,64 @@ var register = {
 
    - 指明打包文件
 
-     ```
+     ```powershell
      npx webpack ./src/main.js -o ./dist/bundle.js
      ```
 
    - 通过配置文件设置打包文件
 
-      ```
+     ```powershell
      webpack
      ```
+
+## 实现自动打开浏览器、热更新和配置浏览器的默认端口号
+
+### 方式1：
++ 修改 `package.json` 的 script 节点如下，其中 `--open` 表示自动打开浏览器，`--port 4321` 表示打开的端口号为 3000 ，`--hot` 表示启用浏览器热更新：
+```js
+"dev": "webpack-dev-server --hot --port 3000 --open"
+```
+
+### 方式2：
+1. 修改 `webpack.config.js` 文件，新增 `devServer` 节点如下：
+```js
+devServer:{
+    hot:true,
+    open:true,
+    port:3000
+}
+```
+2. 在头部引入 `webpack` 模块：
+```js
+var webpack = require('webpack');
+```
+3. 在 `plugins` 节点下新增：
+```js
+new webpack.HotModuleReplacementPlugin()
+```
+
+## 使用webpack打包css文件
+
+1. 运行 `npm i style-loader css-loader -D`
+
+2. 修改 `webpack.config.js` 配置文件：
+
+   > 在 webpack 的配置中 **loader** 有两个目标：
+   >
+   > 1. `test` 属性，用于标识出应该被对应的 loader 进行转换的某个或某些文件。
+   > 2. `use` 属性，表示进行转换时，应该使用哪个 loader。
+
+    ```js
+   module: { // 用于配置所有的第三方模块加载器
+       rules: [ // 所有第三方的匹配规则
+           { test: /\.css$/, use: ['style-loader', 'css-loader'] }
+       ]
+   }
+    ```
+
+
+
+
 
 **注**
 
