@@ -21,9 +21,11 @@ const config = {
         rules: [ // 所有第三方的匹配规则
             { test: /\.css$/, use: ['style-loader', 'css-loader'] },
             // 处理图片的 url 的 loader
-            {test: /\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader?limit=55570&name=[hash:8]-[name].[ext]'},
+            { test: /\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader?limit=55570&name=[hash:8]-[name].[ext]' },
             // 处理字体的 loader
-            {test: /\.(eot|svg|ttf|woff|woff2)$/, use: 'url-loader'}
+            { test: /\.(eot|svg|ttf|woff|woff2)$/, use: 'url-loader' },
+            // 配置 babel 
+            { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ }
         ]
     }
 };

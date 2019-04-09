@@ -1200,6 +1200,27 @@ new webpack.HotModuleReplacementPlugin()
    {test: /\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader?name=[hash:8]-[name].[ext]'}
    ```
 
+## 使用 `babel` 处理高级 JS 语法
+
+1. 运行 `npm i babel-core babel-loader babel-plugin-transform-runtime -D` 安装babel的相关loader包
+
+2. 运行 `npm i babel-preset-env babel-preset-stage-0 -D` 安装babel转换的语法
+
+3. 在 `webpack.config.js` 中添加相关 loader 模块，其中需要注意的是，一定要把`node_modules` 文件夹添加到排除项：
+
+   ```js
+   { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ }
+   ```
+
+4. 在项目根目录中添加 `.babelrc` 文件，并修改这个配置文件如下：
+
+   ```json
+   {
+       "presets":["env", "stage-0"],
+       "plugins":["transform-runtime"]
+   }
+   ```
+
    
 
 **注**
