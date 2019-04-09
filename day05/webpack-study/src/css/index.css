@@ -1,3 +1,17 @@
-li{
+/* li{
     list-style: none;
+} */
+
+html, body{
+    margin: 0;
+    padding: 0;
+    background-color: cyan;
+}
+
+.box{
+    width: 650px;
+    height: 433px;
+    /* background-color: red; */
+    background: url('../images/zzpic16815.jpg');
+    background-size: cover
 }

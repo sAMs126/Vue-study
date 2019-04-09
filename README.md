@@ -1132,13 +1132,15 @@ webpack 是前端的一个项目构建工具，它是基于 Node.js 开发出来
 
 ## 实现自动打开浏览器、热更新和配置浏览器的默认端口号
 
-### 方式1：
+方式1：
+
 + 修改 `package.json` 的 script 节点如下，其中 `--open` 表示自动打开浏览器，`--port 4321` 表示打开的端口号为 3000 ，`--hot` 表示启用浏览器热更新：
 ```js
 "dev": "webpack-dev-server --hot --port 3000 --open"
 ```
 
-### 方式2：
+方式2：
+
 1. 修改 `webpack.config.js` 文件，新增 `devServer` 节点如下：
 ```js
 devServer:{
@@ -1175,9 +1177,30 @@ new webpack.HotModuleReplacementPlugin()
    }
     ```
 
+## 使用webpack处理css中的路径
 
+1. 运行 `npm i url-loader file-loader -D`
 
+2. 增加 `webpack.config.js` 中的 `module` 的 `rules` 属性
 
+   ```js
+   // 处理图片的 url 的 loader
+   {test: /\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader'}
+   ```
+
+3. 可以通过 `limit` 指定进行 base64 编码的图片大小；只有小于指定字节（byte）的图片才会进行 base64 编码：
+
+   ```js
+   {test: /\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader?limit=55570'}
+   ```
+
+4. 可以设置图片打包名称
+
+   ```js
+   {test: /\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader?name=[hash:8]-[name].[ext]'}
+   ```
+
+   
 
 **注**
 
