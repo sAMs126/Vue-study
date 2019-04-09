@@ -16,3 +16,6 @@ module.exports = {
     },
     mode: 'development'
 };
+// npm install webpack-cli -D
+// 安装 webpack-dev-server 到项目的本地开发依赖，npm i webpack-dev-server -D
+// 想要正常运行 webpack-dev-server 必须在 [本地项目] 中必须安装 webpack
