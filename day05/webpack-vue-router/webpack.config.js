@@ -17,12 +17,12 @@ const config = {
         }),
         new VueLoaderPlugin()
     ],
-    /* resolve: {
+    resolve: {
         alias: {
             // 设置 vue 导入时的包路径
             'vue$': 'vue/dist/vue.js'
         }
-    }, */
+    },
     module: { // 用于配置所有的第三方模块加载器
         rules: [ // 所有第三方的匹配规则
             // { test: /\.css$/, use: ['style-loader', 'css-loader'] },
