@@ -1339,7 +1339,36 @@ new webpack.HotModuleReplacementPlugin()
    })
    ```
 
-   
+### ES6中语法使用总结
+
+1. 使用 `export default` 和 `export` 向外暴露模块中的成员; 对应 ES5 中的 `module.exports` 和 `exports`
+
+   - 暴露 
+     ```js
+     export default{
+         name: 'zs',
+         age: 23
+     }
+     // export default 向外暴露成员，可以使用任意的变量来接收
+     // ** 在一个模块中，export default 只允许向外面暴露 1 次
+     
+     // 其他成员可以使用 export 向外暴露成员
+     // ** 使用 export 向外暴露成员，只能使用 {} 来接收，这种形式叫做 [按需导出] ==> 在 {} 中可选导出，不是必须导出
+     export var title = 'export 向外暴露成员'
+     export var content = 'content信息'
+     ```
+
+   - 接收
+
+     ```js
+     import info, { title as t, content } from './test'
+     console.log(info)
+     console.log(t + ' -- ' + content)
+     ```
+
+2. 使用 `import ** from **` 和 `import '路径' ` 还有 `import {a, b} from '模块标识' ` 导入其他模块
+
+3. 使用箭头函数：`(a, b)=> { return a-b; }`
 
 **注**
 
