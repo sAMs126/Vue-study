@@ -1158,6 +1158,29 @@ var webpack = require('webpack');
 new webpack.HotModuleReplacementPlugin()
 ```
 
+## 使用 `html-webpack-plugin` 插件配置启动页面
+
+由于使用 `--contentBase` 指令的过程比较繁琐，需要指定启动的目录，同时还需要修改index.html 中 script 标签的src属性，所以推荐大家使用 `html-webpack-plugin` 插件配置启动页面.
+
+1. 运行 `npm i html-webpack-plugin -D` 安装到开发依赖
+
+2. 修改 `webpack.config.js` 配置文件
+
+   ```js
+   const htmlWebpackPlugin = require('html-webpack-plugin')
+   
+   ...
+   plugins: [
+       new htmlWebpackPlugin({
+           // 创建一个在内存中生成 HTML 页面
+           template:path.join(__dirname, 'src/index.html'),//指定模板路径
+           filename: 'index.html' // 指定生成页面名称
+       })
+   ]
+   ```
+
+3. 将 index.html 中 script 标签注释掉，因为 `html-webpack-plugin` 插件会自动把bundle.js 注入到 index.html 页面中！
+
 ## 使用webpack打包css文件
 
 1. 运行 `npm i style-loader css-loader -D`
@@ -1219,6 +1242,101 @@ new webpack.HotModuleReplacementPlugin()
        "presets":["env", "stage-0"],
        "plugins":["transform-runtime"]
    }
+   ```
+
+## 在 webpack 中使用 vue
+
+引入 vue 项目依赖：`npm i vue -S`
+
+### 导入完整版 Vue
+
+方法1：
+
+1. 在 main.js 中指明导入 vue.js 的路径
+
+   ```js
+   // 导入 vue 的包
+   // ** 使用 import Vue from 'vue' 导入的 Vue 构造函数功能不完整，只提供了 runtime-only 的方式 (阉割版)
+   import Vue from '../node_modules/vue/dist/vue'
+   
+   // ** 包的查找规则
+   // 从 node_modules 中根据包名找到对应的文件夹，并在文件夹中找到一个叫做 package.json 的包的属性文件
+   // package.json 文件中，有一个 main 属性 ==> 指定了包被加载时候的入口文件
+   ```
+
+方法2：
+
+1. 在 main.js 中导入 vue
+
+   ```js
+   import Vue from 'vue'
+   ```
+
+2. 在 webpack.config.js 中配置 vue 执行文件
+
+   ```js
+   resolve: {
+       alias: {
+           // 设置 vue 导入时的包路径
+           'vue$': 'vue/dist/vue.js'
+       }
+   }
+   ```
+
+### 导入 .vue 模板
+
+1. 创建 .vue 模板
+
+   ```vue
+   <template>
+       <div>
+           <h1>这是使用 .vue 模板创建的组件</h1>
+       </div>
+   </template>
+   
+   <script>
+   // 脚本
+   </script>
+   
+   <style>
+   /* 样式 */
+   </style>
+   ```
+
+2. webpack 默认无法打包 .vue 文件，安装相关 loader ：`npm i vue-loader vue-template-compiler -D`
+
+3. 在 webpack.config.js 中配置处理 .vue 的 loader，引入 loader 相关依赖
+
+   ```js
+   const VueLoaderPlugin = require('vue-loader/lib/plugin');
+   
+   plugins: [
+       new VueLoaderPlugin()
+   ],
+   
+   module: { // 用于配置所有的第三方模块加载器
+       rules: [ 
+           // 处理 .vue 文件的 loader
+           { test: /\.vue$/, use: 'vue-loader' }
+       ]
+   }
+   ```
+
+4. 在 main.js 中配置 .vue 模板
+
+   ```js
+   // 导入 .vue 模板对象
+   import login from './template/login.vue'
+   
+   var vm = new Vue({
+       el: '#app',
+       // 使用 render 函数，将 el 所指的元素用 .vue 模板所代替
+       render: function(createElements) {
+           return createElements(login)
+       },
+       // 简写
+       render: c => c(login)
+   })
    ```
 
    
